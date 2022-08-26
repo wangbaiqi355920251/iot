@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.iti.modules.datastore.dao.GNSSMonitorDataDao">
+    <insert id="insertBatchType1">
+        INSERT INTO south_survey_gnss_sensor_data(sensor_name, gps_total_x, gps_total_y, gps_total_z, date, device_id)
+        VALUES
+        <foreach collection="sensors" item="item" separator=",">
+            (#{item.name}, #{item.data.gpsTotalX}, #{item.data.gpsTotalY}, #{item.data.gpsTotalZ}, #{date}, #{deviceId})
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchType2">
+        INSERT INTO south_survey_gnss_sensor_data(sensor_name, gps_total_x, gps_total_y, gps_total_z, date, device_id)
+        VALUES
+        <foreach collection="sensors" item="item" separator=",">
+            (#{item.name}, #{item.data.gpsTotalX}, #{item.data.gpsTotalY}, #{item.data.gpsTotalZ}, #{item.data.gpsTotalX.entrySet()}, #{deviceId})
+        </foreach>
+    </insert>
+
+
+</mapper>
