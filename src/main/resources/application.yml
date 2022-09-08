@@ -4,7 +4,8 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 8083
+#  port: 8083
+    port: 8443
 
   servlet:
     context-path: /iot
@@ -22,16 +23,25 @@ spring:
       max-file-size: 101MB
       max-request-size: 101MB
       enabled: true
+  application:
+    name: iot-platform-backend
 
   mvc:
     throw-exception-if-no-handler-found: true
+  cloud:
+    consul:
+      discovery:
+        instance-id: ${spring.application.name}-ms
+        hostname: 127.0.0.1
+        port: 8500
+      enabled: false
 
 
 #mybatis
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: io.renren.modules.*.entity
+  typeAliasesPackage: io.iti.modules.iot.*.entity
   global-config:
     #数据库相关配置
     db-config:
@@ -46,6 +56,23 @@ mybatis-plus:
     cache-enabled: false
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
+
+#netty UDP
+netty:
+  udpsocket:
+    # udpsocket服务端口
+    port: 8099
+    # 绑定的网卡
+    ip: 127.0.0.1
+    # 消息帧最大体积
+    max-frame-size: 1500
+    # URI路径
+    path: /
+  tcpsocket:
+    port: 8098
+    ip: 127.0.0.1
+    max-frame-size: 1500
+
 
 
 

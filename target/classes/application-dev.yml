@@ -4,15 +4,16 @@ spring:
         druid:
 #            driver-class-name: org.postgresql.Driver
             driver-class-name: com.mysql.cj.jdbc.Driver
-            url: jdbc:mysql://192.168.146.129:3306/iot?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useAffectedRows=true   #办公网络||测试服||正式服专用
+            url: jdbc:mysql://10.41.17.7:33308/iot-platform?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useAffectedRows=true   #办公网络||测试服||正式服专用
+#            url: jdbc:mysql://47.96.41.190:3306/renren_fast?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useAffectedRows=true
 #            url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useAffectedRows=true   #办公网络||测试服||正式服专用
 #            driver-class-name: org.postgresql.Driver
 #            driver-class-name: com.mysql.cj.jdbc.Driver
 #            url: jdbc:mysql://10.0.22.66:4000/yanghu_sensor?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useAffectedRows=true   #VPN连接深信服时专用
-            username: test1
-            password: test1
+            username: wangbaiqi
+            password: ItiIotManager!Ak78
 #            username: root
-#            password: study!123
+#            password: root
             initial-size: 10
             max-active: 100
             min-idle: 10
@@ -71,3 +72,7 @@ spring:
 #      url: jdbc:postgresql://localhost:5432/renren_security
 #      username: renren
 #      password: 123456
+
+mybatis-plus:
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.iti.modules.iot.product.dao.RuleDao">
+    <!-- 插入报文字段说明 -->
+    <insert id="insertField">
+        insert into tb_field(field_num,field_name,field_description,rule_id) values (#{field_num},#{field_name},#{field_description},#{rule_id})
+    </insert>
+    <!-- 动态创建存储报文信息的表 -->
+    <update id="creatMsgTable">
+        create table ${tableName} (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        <foreach collection="cloums" item="listItem" separator=",">
+            ${listItem} varchar(30)
+        </foreach>
+        ,
+        create_date date,
+        update_date date,
+        isdelete int,
+        PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    </update>
+    <!-- 获取表的字段名 -->
+    <select id="selectTableColName" resultType="String">
+    <!--SELECT COLUMN_NAME from information_schema.columns WHERE table_name=#{tableName}-->
+        SELECT field_name from tb_field WHERE rule_id=#{ruleId} ORDER BY field_num
+    </select>
+
+<!-- 插入报文信息 -->
+    <insert id="insertMsg">
+        insert into ${tableName}
+        (<foreach collection="colName" item="listItem" separator=",">
+            ${listItem}
+        </foreach>)
+        values
+        (<foreach collection="Msg" item="listItem" separator=",">
+            '${listItem}'
+        </foreach>)
+    </insert>
+
+    <!-- 查询设备报文信息 -->
+    <select id="queryDeviceMsgPage" resultType="map">
+        SELECT * from ${tableName} WHERE deviceNum=#{deviceId}
+    </select>
+
+    <!-- 查询规则字段说明 -->
+    <select id="queryFieldName" resultType="map">
+        SELECT field_name,field_description from tb_field WHERE rule_id=#{ruleId}
+    </select>
+
+    <!-- 判断RuleName是否已存在 -->
+    <select id="isExistTheSameRuleName" resultType="int">
+        SELECT COUNT(*) FROM tb_rule WHERE rule_name = #{ruleName}
+    </select>
+
+    <!-- 判断TableName是否已存在 -->
+    <select id="isExistTheSameTableName" resultType="int">
+        SELECT COUNT(*) FROM information_schema.TABLES WHERE table_name=#{tableName}
+    </select>
+</mapper>
